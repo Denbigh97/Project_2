@@ -64,7 +64,7 @@ function buildPieChart() {
       textinfo: "label+percent",
       hoverinfo : "label+percent",
       hovermode: "closests",
-      marker: {colors: ["#DB2E27", "#74B643", "#FFE571"]},
+      marker: {colors: ["#9e4655", "#f57d57", "#f7ecaa"]},
       automargin: true
     }]
     

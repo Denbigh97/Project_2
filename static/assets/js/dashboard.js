@@ -30,7 +30,7 @@ Plotly.d3.csv("https://raw.githubusercontent.com/TheGreekGoddess/Project_2/maste
       height: 50,
       align: "center",
       line: {width: 1, color: 'rgb(50, 50, 50)'},
-      fill: {color: '#ffa534'},
+      fill: {color: '#f6a964'},
       font: {family: "Arial", size: 12, color: "white"}
     },
     cells: {
@@ -38,7 +38,7 @@ Plotly.d3.csv("https://raw.githubusercontent.com/TheGreekGoddess/Project_2/maste
       height: 30,
       align: ["center", "center"],
       line: {color: "black", width: 1},
-      fill: {color: ['rgba(228, 222, 249, 0.65)','#ffa534', 'rgba(228, 222, 249, 0.65)']},
+      fill: {color: ['#fff','#f6a964', '#fff']},
       font: {family: "Arial", size: 11, color: ["black"]}
     }
   }]
