@@ -52,18 +52,19 @@ var fire_count =
  {'Oklahoma': 1407},
  {'Oregon': 2231},
  {'Pennsylvania': 17},
-//  {'Puerto Rico': 147}, Choropleth does not have Puerto Rico as a GeoJSON
  {'Rhode Island': 1},
  {'South Carolina': 28},
  {'South Dakota': 2101},
  {'Tennessee': 68},
  {'Texas': 261},
  {'Utah': 1441},
+ {'Vermont' : 0},
  {'Virginia': 65},
  {'Washington': 1452},
  {'West Virginia': 19},
  {'Wisconsin': 95},
- {'Wyoming': 705}];
+ {'Wyoming': 705},
+ {'Puerto Rico': 147}]
  
 for (i = 0; i < fire_count.length; i++) {
     var fire_value = parseInt(Object.values(fire_count[i]))
