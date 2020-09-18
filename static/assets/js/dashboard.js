@@ -1,13 +1,19 @@
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
+
+// Create a function to read in the data using D3
 Plotly.d3.csv("https://raw.githubusercontent.com/TheGreekGoddess/Project_2/master/Data/Fires_on_federal_land_from_FOIA_CLEANSED.csv", function(err, rows){
 
+  // Define a function to unpack the data
   function unpack(rows, key) {
   return rows.map(function(row) { return row[key]; });
   }
 
+  // Define the varibles that will hold the various arrays for the dashboard data table
   var headerNames = Plotly.d3.keys(rows[0]);
-
   var headerValues = [];
   var cellValues = [];
+
+  // Define the loop that will iterate and add the various values to the dashboard data table fields
   for (i = 0; i < headerNames.length; i++) {
     headerValue = [headerNames[i]];
     headerValues[i] = headerValue;
@@ -20,7 +26,7 @@ Plotly.d3.csv("https://raw.githubusercontent.com/TheGreekGoddess/Project_2/maste
   cellValues[1][i] = dateValue
   }
 
-
+  // Define the attributes for the dashboard data table
   var data = [{
     type: 'table',
     columnwidth: [200,100,200,200,200,200,500,200,250,250, 150, 100, 100, 100],
@@ -43,15 +49,17 @@ Plotly.d3.csv("https://raw.githubusercontent.com/TheGreekGoddess/Project_2/maste
     }
   }]
 
+  // Define the layout of the dashboard data table
   var layout = {
     hoverlabel: { bgcolor: "salmon" },
     height: document.documentElement.clientHeight
-
   }
 
-
+  // Render the plot to the div tag with id "myTable"
   Plotly.newPlot("myTable", data, layout, {
       // responsive: true,
       displaylogo: false
   });
 });
+
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=

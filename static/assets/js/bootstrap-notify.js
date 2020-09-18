@@ -1,17 +1,8 @@
-/*
-    
-    
-
-     Creative Tim Modifications
-     
+/* 
+     Creative Tim Modifications     
      Lines: 239, 240 was changed from top: 5px to top: 50% and we added margin-top: -13px. In this way the close button will be aligned vertically 
      Line:242 - modified when the icon is set, we add the class "alert-with-icon", so there will be enough space for the icon.
-
-
-
-
 */
-
 
 /*
 * Project: Bootstrap Notify = v3.1.5
@@ -22,6 +13,8 @@
 */
 
 /* global define:false, require: false, jQuery:false */
+
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
 
 (function (factory) {
 	if (typeof define === 'function' && define.amd) {
@@ -400,5 +393,6 @@
 			$('[data-notify-position="' + command + '"]').find('[data-notify="dismiss"]').trigger('click');
 		}
 	};
-
 }));
+
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=

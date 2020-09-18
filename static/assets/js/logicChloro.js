@@ -1,8 +1,14 @@
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
+
+// Define a map object and set the default mode, latitude and longitude
 var myMap = L.map("map", {
     center: [37.0522, -105.2437],
     zoom: 3
 });
 
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
+
+// Define the default basemap available on Mapbox.com with a placeholder for the API Key needed to access these
 L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
   attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
   tileSize: 512,
@@ -12,6 +18,9 @@ L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
   accessToken: API_KEY
 }).addTo(myMap);
 
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
+
+// Define the variable that will contain the list of dictionaries that contain the State as the key and the fire counts as the corresponding values
 var fire_count = 
 [{'Alabama': 33},
  {'Alaska': 511},
@@ -65,14 +74,22 @@ var fire_count =
  {'Wisconsin': 95},
  {'Wyoming': 705},
  {'Puerto Rico': 147}]
- 
+
+
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
+
+// Define the loop that will iterate throught the above variable
 for (i = 0; i < fire_count.length; i++) {
     var fire_value = parseInt(Object.values(fire_count[i]))
     //console.log(fire_value)
+
     statesData.features[i].properties.fire = fire_value;
     //console.log(statesData.features[i].properties)
 };
 
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
+
+// Define the functions that will determine the default and corresponding fill colors based on the overall fire counts by State
 function getColor(d) {
     return d > 2200 ? '#800026' :
            d > 1500  ? '#BD0026' :
@@ -95,8 +112,12 @@ function style(feature) {
     };
 }
 
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
+
+// Define the GeoJSON variable before our listeners layers
 var geojson;
 
+// Define the event listener for layer mouseover event
 function highlightFeature(e) {
     var layer = e.target;
 
@@ -110,18 +131,22 @@ function highlightFeature(e) {
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
     }
+    
     info.update(layer.feature.properties);
 };
 
+// Define a click listener that zooms to the State
 function zoomToFeature(e) {
     myMap.fitBounds(e.target.getBounds());
 };
 
+// Define the function on mouseout
 function resetHighlight(e) {
     geojson.resetStyle(e.target);
     info.update();
 };
 
+// Define a function that runs once per feature and displays a pop-up containing the location and count of fires on mouseover
 function onEachFeature(feature, layer) {
     layer.on({
         mouseover: highlightFeature,
@@ -130,20 +155,25 @@ function onEachFeature(feature, layer) {
     });
 };
 
+// Define a GeoJSON layer containing the State data
 geojson = L.geoJson(statesData, {
     style: style,
     onEachFeature: onEachFeature
 }).addTo(myMap);
 
+// Define the variable for custom control
 var info = L.control();
 
+// Define a function that uses the DOM tree to create a div with the class as "info"
 info.onAdd = function (map) {
-    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this._div = L.DomUtil.create('div', 'info');
     this.update();
     return this._div;
 };
 
-// method that we will use to update the control based on feature properties passed
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
+
+// Define a function that will update the control based on feature properties passed
 info.update = function (props) {
     this._div.innerHTML = '<h4>Number of Fires</h4>' +  (props ?
         '<b>' + props.name + '</b><br />' + props.fire + ' fires'
@@ -152,6 +182,9 @@ info.update = function (props) {
 
 info.addTo(myMap);
 
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
+
+// Define and add the legend to the map
 var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {
@@ -160,9 +193,8 @@ legend.onAdd = function (map) {
         grades = [0, 5, 25, 100, 300, 700, 1500, 2200],
         labels = [];
         
-    // loop through our fire intervals and generate a label with a colored square for each interval
+    // Define the loop that iterates through our fire intervals and generates a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
-        //div.innerHTML = '<h1>hello</h1>'
         div.innerHTML +=
             '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
             grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
@@ -171,79 +203,7 @@ legend.onAdd = function (map) {
     return div;
 };
 
+// Add the legend to the displayed map
 legend.addTo(myMap);
 
-// var stateList = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
-// var yearList = [2013, 2014, 2015, 2016, 2017]
-
-// var count_dict = {}
-
-// stateList.forEach(function(state){
-//     yearList.forEach(function(year){
-//     //url = `https://wildfire-api-3.herokuapp.com/api/v1.0/interactive_pie/${state}/${year}`
-//     url = `https://datavisproject2.herokuapp.com/api/v1.0/interactive_pie/${state}/${year}`
-//     stateName = state
-//     //console.log(url)
-//     getData(url);
-//     //console.log(url)
-//     });
-// });
-// //url = `https://wildfire-api-3.herokuapp.com/api/v1.0/interactive_pie/${state}/${year}`
-// async function getData(sample){
-//     const data = await d3.json(sample).then(data=>console.log(data))
-// }
-
-
-
-//console.log(statesData.features[0].properties)
-
-//  data.fire = 10
-//  console.log(
-//  data
-//  )
-
-//  statesData.forEach(function(data, index){
-//     console.log(data.feature[index].properties)
-//  });
- 
-
- //console.log(fire_count)
-// const storage = [
-//     { data: '1', status: '0' },
-//     { data: '2', status: '0' },
-//     { data: '3', status: '0' },
-//     { data: '4', status: '0' },
-//     { data: '5', status: '0' },
-//     { data: '6', status: '0' },
-//     { data: '7', status: '1' },
-//   ];
-  
-//   let counter = 0;
-//   for (const obj of storage) {
-//     if (obj.status === '0') counter++;
-//   }
-  
-//   console.log(counter); // 6
-
-
-
-//var geoData = "us-states.json"
-
-// var geojson;
-
-// d3.json(geoData, function(data){
-
-//     geojson = L.choropleth( data, {
-//         valueProperty: "density",
-//         scale: ["#FFFFb2", "#b10026"],
-//         steps: 10,
-//         mode: "q",
-//         style: 
-//         {
-//             color: "#fff",
-//             weight: 1,
-//             fillOpacity: 0.8
-//         }
-
-//     }).addTo(myMap);
-// });
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=

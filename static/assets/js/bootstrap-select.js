@@ -1,3 +1,5 @@
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
+
 !function($) {
     var Selectpicker = function(element, options, e) {
         if (e ) {
@@ -29,8 +31,6 @@
             var _this = this;
             this.$element.hide();
             this.multiple = this.$element.prop('multiple');
-
-
             var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
             var id = this.$element.attr('id');
             this.$element.after( this.createView() );
@@ -47,19 +47,23 @@
             var menuHeight = 0;
             var selectHeight = this.$newElement.outerHeight();
             this.button = this.$newElement.find('> button');
+
             if (id !== undefined) {
                 this.button.attr('id', id);
                 $('label[for="' + id + '"]').click(function(){ select.find('button#'+id).focus(); })
             }
+
             for (var i = 0; i < classList.length; i++) {
                 if(classList[i] != 'selectpicker') {
                     this.$newElement.addClass(classList[i]);
                 }
             }
+
             //If we are multiple, then add the show-tick class by default
             if(this.multiple) {
                  this.$newElement.addClass('select-multiple');
             }
+
             this.button.addClass(this.options.style);
             menu.addClass(this.options.menuStyle);
             menuArrow.addClass(function() {
@@ -67,14 +71,15 @@
                     return _this.options.menuStyle.replace('dropdown-', 'dropdown-arrow-');
                 }
             });
+
             this.checkDisabled();
             this.checkTabIndex();
             this.clickListener();
             var menuPadding = parseInt(menu.css('padding-top')) + parseInt(menu.css('padding-bottom')) + parseInt(menu.css('border-top-width')) + parseInt(menu.css('border-bottom-width'));
+
             if (this.options.size == 'auto') {
                 
-                // Creative Tim Changes: We changed the regular function made in bootstrap-select with this function so the getSize() will not be triggered one million times per second while you scroll.
-                
+                // Creative Tim Changes: We changed the regular function made in bootstrap-select with this function so the getSize() will not be triggered one million times per second while you scroll.                
                 var getSize = debounce(function() {
                      var selectOffset_top_scroll = selectOffset_top - $(window).scrollTop();
                     var windowHeight = $(window).innerHeight();
@@ -84,7 +89,8 @@
                     if (select.hasClass('dropup')) {
                         menuHeight = selectOffset_top_scroll - menuExtras;
                     }
-                    //limit menuHeight to 300px to have a smooth transition with cubic bezier on dropdown
+
+                    // Limit the menuHeight to 300px to have a smooth transition with cubic bezier on dropdown
                     if(menuHeight >= 300){
                         menuHeight = 300;
                     }
@@ -138,7 +144,6 @@
 
             return $(drop);
         },
-
 
         createView: function() {
             var $drop = this.createDropdown();
@@ -230,7 +235,6 @@
          return '<a tabindex="-1" href="#" class="'+classes+'">' +
                  '<span class="">' + test + '</span>' +
                  '</a>';
-
         },
 
          render:function() {
@@ -249,8 +253,6 @@
                _this.setDisabled(index, $(this).is(':disabled') || $(this).parent().is(':disabled') );
                _this.setSelected(index, $(this).is(':selected') );
             });
-
-
 
             var selectedItems = this.$element.find('option:selected').map(function(index,value) {
                 if($(this).attr('title')!=undefined) {
@@ -277,9 +279,7 @@
             }
             
             this.$element.next('.select').find('.filter-option').html( title );
-	    },
-	    
-        
+	    },        
         
         setSelected:function(index, selected) {
             if(selected) {
@@ -316,15 +316,12 @@
 		clickListener: function() {
             var _this = this;
             
-            $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
-            
-           
+            $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });           
             
             this.$newElement.on('click', 'li a', function(e){
                 var clickedIndex = $(this).parent().index(),
                     $this = $(this).parent(),
                     $select = $this.parents('.select');
-                
                 
                 //Dont close on multi choice menu    
                 if(_this.multiple) {
@@ -335,6 +332,7 @@
                 
                 //Dont run if we have been disabled
                 if ($select.prev('select').not(':disabled') && !$(this).parent().hasClass('disabled')){
+
                     //Deselect all others if not multi select box
                     if (!_this.multiple) {
                         $select.prev('select').find('option').removeAttr('selected');
@@ -351,14 +349,12 @@
                         }
                     }
                     
-                    
                     $select.find('.filter-option').html($this.text());
                     $select.find('button').focus();
 
                     // Trigger select 'change'
                     $select.prev('select').trigger('change');
                 }
-
             });
             
            this.$newElement.on('click', 'li.disabled a, li dt, li .divider', function(e) {
@@ -384,11 +380,10 @@
                 return this.$element.val();
             }
         }
-
     };
 
     $.fn.selectpicker = function(option, event) {
-       //get the args of the outer function..
+       // Get the args of the outer function..
        var args = arguments;
        var value;
        var chain = this.each(function () {
@@ -405,8 +400,7 @@
             }
             
             if (typeof option == 'string') {
-                //Copy the value of option, as once we shift the arguments
-                //it also shifts the value of option.
+                //Copy the value of option, as once we shift the arguments, it also shifts the value of option.
                 property = option;
                 if(data[property] instanceof Function) {
                     [].shift.apply(args);
@@ -436,3 +430,5 @@
     }
 
 }(window.jQuery);
+
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=

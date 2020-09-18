@@ -16,6 +16,7 @@ function CreateURL(state, year) {
   });
 
   buildPieChart(state, year);
+  
 };
 
 // =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
@@ -77,10 +78,10 @@ function buildPieChart() {
     
     var config ={responsive:true}
     
-
     // Render the plot to the div tag with id "pie"
     Plotly.plot('pie', pieData, pieLayout, config)
   })
+  
 }
 
 // =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=

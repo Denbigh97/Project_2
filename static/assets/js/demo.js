@@ -1,5 +1,6 @@
-type = ['','info','success','warning','danger'];
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
 
+type = ['','info','success','warning','danger'];
 
 demo = {
     initPickColor: function(){
@@ -167,7 +168,6 @@ demo = {
 
         Chartist.Line('#chartHours', dataSales, optionsSales, responsiveSales);
 
-
         var data = {
           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           series: [
@@ -258,6 +258,6 @@ demo = {
             }
         });
 	}
-
-
 }
+
+// =-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=-+-=
